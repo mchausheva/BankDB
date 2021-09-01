@@ -26,13 +26,13 @@ public class DatabaseConfiguration {
 	@Value("${spring.datasource.password}")
 	private String password;
 
-	@Value("${spring.datasource.driver-class-name}")
+	@Value("${spring.datasource.driver-class-name:oracle.jdbc.pool.OracleDataSource}")
 	private String driverClassName;
 	
 	@Value("${oracle.ucp.minPoolSize}")
 	private String minPoolSize;
 	
-	@Value("${spring.datasource.driver-class-name:oracle.jdbc.pool.OracleDataSource}")
+	@Value("${oracle.ucp.maxPoolSize}")
 	private String maxPoolSize;
 	
     @Bean(name = "OracleUniversalConnectionPool")

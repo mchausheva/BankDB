@@ -21,10 +21,10 @@ import lombok.extern.slf4j.Slf4j;
 public class BankServiceImp implements BankService{
 
 	@Autowired
-	RestTemplate restTemplate = new RestTemplate();
+	private RestTemplate restTemplate;
 	
 	@Value("${bankApi.url}")
-	private String bankApiUrl; //http://localhost:8082/bankApi
+	private String bankApiUrl; 
 
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
@@ -35,7 +35,7 @@ public class BankServiceImp implements BankService{
 
 	public DivideMerchantCategory getMerchants() {
 		log.info("Get Merchant Data. ");
-
+		
 		DivideMerchantCategory list = restTemplate.getForObject(bankApiUrl + "/getMerchantsData", DivideMerchantCategory.class);
 		return list;
 	}

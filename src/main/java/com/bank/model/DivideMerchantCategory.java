@@ -9,33 +9,34 @@ import lombok.Data;
 @Data
 public class DivideMerchantCategory {
 
-	private List<Merchant> merchantList;
-	
+	private Integer merchantCount;
+	private List<Merchant> merchantsList;
+
 	public List<Category> asList() {
+
 		LinkedHashMap<Integer, Category> hashMap = new LinkedHashMap<Integer, Category>();
-		int categoryListOrder = 0;
-		
-		for (Merchant merchant : merchantList) {
+		int categoryOrder = 0;
+		for (Merchant merchant : merchantsList) {
 			if (!hashMap.containsKey(merchant.getCategoryId())) {
 				Category category = new Category(merchant.getCategoryId(), 
-												 merchant.getCategoryName(), 
-												 categoryListOrder,
-												 new ArrayList<Merchant>());
-				categoryListOrder++;
+												merchant.getCategoryName(),
+											    "A", "B", 
+												categoryOrder,
+												new ArrayList<Merchant>());
+				categoryOrder++;
 				hashMap.put(merchant.getCategoryId(), category);
 			}
 		}
-		
-		int merchantListOrder = 0;
-		for (Merchant merchant : merchantList) {
+
+		int merchantOrder = 0;
+		for (Merchant merchant : merchantsList) {
 			Category category = hashMap.get(merchant.getCategoryId());
 			merchant.setCategory(category);
 			category.addMerchant(merchant);
-			merchant.setListOrder(merchantListOrder);
-			merchantListOrder++;
+			merchant.setListOrder(merchantOrder);
+			merchantOrder++;
 		}
-		
+
 		return new ArrayList<Category>(hashMap.values());
 	}
-	
 }

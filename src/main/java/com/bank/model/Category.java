@@ -1,6 +1,5 @@
 package com.bank.model;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,41 +9,45 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AccessLevel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PUBLIC, force = true )
 @Entity(name = "category")
-@Table(name = "up_merchants_category")
-public class Category implements Serializable{
-
-	private static final long serialVersionUID = 1L;
+@Table(name = "up_merchant_categories")
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonPropertyOrder({ "merchantList", "categoryId", "categoryType", "categoryName" })
+public class Category {
 
 	@Id
 	@Column(name = "category_id")
-	private final Integer categoryId;
-	
+	private int categoryId;
+
 	@Column(name = "category_name")
-	private final String categoryName;
-	
-//	@Column(name = "category_type")
-//	private final String categoryType;
-//	
-//	@Column(name = "category_desc")
-//	private final String categoryDesc;
-	
+	private String categoryName;
+
+	@Column(name = "category_type")
+	private String categoryType;
+
+	@JsonIgnore
+	@Column(name = "category_desc")
+	private String categoryDesc;
+
+	@JsonIgnore
 	@Column(name = "list_order")
-	private final Integer listOrder;
-	
-	@Column(name = "category_merchants")
+	private int listOrder;
+
+	@JsonProperty("categoryMerchants")
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-	private final List<Merchant> categoryMerchants;
-	
-	public void addMerchant(Merchant merchant) {
-		categoryMerchants.add(merchant);
+	private List<Merchant> merchantList;
+
+	public void addMerchant(Merchant m) {
+		merchantList.add(m);
 	}
 }

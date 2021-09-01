@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bank.model.Category;
-import com.bank.model.EResponse;
+import com.bank.model.SubscrResponse;
+import com.bank.model.SubscrResponse.ResponseStatus;
 import com.bank.model.Subscription;
 import com.bank.repository.CategoryRepository;
 import com.bank.repository.MerchantRepository;
@@ -29,37 +30,38 @@ public class DataBaseServiceImp implements DataBaseService {
 
 	@Override
 	public void insertAll(List<Category> categoryList) {
-		log.info("Inserting ");
+		log.info("Inserting. ");
 		categoryRepository.saveAll(categoryList);
 	}
 
 	@Override
 	public void deleteAll() {
-		log.info("Delete all ");
+		log.info("Delete all. ");
 		merchantRepository.deleteAll();
 		categoryRepository.deleteAll();
 	}
 
 	@Override
 	public Iterable<Category> getAll() {
+		log.info("Get merchants and categories. ");
 		return categoryRepository.findAll();
 	}
-
+	
 	@Override
-	public EResponse saveSubscription(Subscription subscription) {
-		EResponse response = new EResponse();
+	public SubscrResponse saveSubscription(Subscription subscription) {
+		log.info("Save Subscription. ");
 
-		try {
-			subscrRepository.save(subscription);
-			boolean have = subscrRepository.existsById(subscription.subscriptionId);
-			if (have) {
-				response.setStatus(EResponse.ResStatus.OK);
-			} else {
-				response.setStatus(EResponse.ResStatus.GENERAL_ERROR);
-			}
-		} catch (Exception e) {
-			response.setStatus(EResponse.ResStatus.GENERAL_ERROR);
+		SubscrResponse response = new SubscrResponse(null, null, null, null, null, null, 0);
+		
+		subscrRepository.save(subscription);
+		boolean existId = subscrRepository.existsById(subscription.getSubscriptionId());
+		if (existId) {
+			response = new SubscrResponse("200", "SUCCESS", "Успешно", null, null, "Success", 1);
+			response.setStatus(ResponseStatus.OK);
+		} else {
+			response.setStatus(SubscrResponse.ResponseStatus.GENERAL_ERROR);
 		}
+		
 		return response;
 	}
 }

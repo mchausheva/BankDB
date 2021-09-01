@@ -27,4 +27,6 @@ public class ERequest implements Serializable{
 	
 	@JsonFormat(pattern = "yyyyMMddHHmmss")
 	private final Date dt;
+	
+	private final Integer amount;
 }

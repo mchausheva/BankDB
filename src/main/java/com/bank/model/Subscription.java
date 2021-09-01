@@ -1,10 +1,10 @@
 package com.bank.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,14 +16,13 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PUBLIC,force = true)
-@Entity //(name = "subscription")
-@Table(name = "up_subscription")
+@Entity (name = "subscriptions")
+@Table(name = "up_subscriptions")
 public class Subscription implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue
     @Column(name = "subscription_id")
     public final Integer subscriptionId;
     
@@ -39,6 +38,9 @@ public class Subscription implements Serializable{
     @Column(name = "merchant_id")
     public final Integer merchantId;
     
+    @Column(name = "merchant_name")
+    public final String merchantName;
+    
     @Column(name = "customer_name")
     public final String customerName;
     
@@ -46,7 +48,7 @@ public class Subscription implements Serializable{
     public final String address;
     
     @Column(name = "short_desc")
-    public final String short_desc;
+    public final String shortDesc;
     
     @Column(name = "payment_method")
     public final String paymentMethod;
@@ -54,36 +56,39 @@ public class Subscription implements Serializable{
     @Column(name = "payment_account")
     public final String paymentAccount;
     
+    @Column(name = "payment_account_desc")
+    public final String paymentAccountDesc;
+    
     @Column(name = "automatic_payment")
-    public final Boolean automatic_payment;
+    public final Boolean automaticPayment;
     
     @Column(name = "automatic_max_amount")
-    public final Boolean automatic_max_amount;
+    public final Integer maxAmountAuto;
     
     @Column(name = "automatic_max_days_retry")
-    public final Integer automatic_max_days_retry;
+    public final Integer retryDays;
     
     @Column(name = "insert_date")
-    public final String insert_date;
+    public final Date insertDate;
     
     @Column(name = "last_update_date")
-    public final String last_update_date;
+    public final Date lastUpdateDate;
     
     @Column(name = "cached_due_amount")
-    public final Integer cached_due_amount;
+    public final Integer cachedDueAmount;
     
     @Column(name = "cached_due_checked_date")
-    public final String cached_due_checked_date;
+    public final Date cachedDueCheckedDate;
     
     @Column(name = "cached_due_service_response")
-    public final String cached_due_service_response;
+    public final String cachedDueServiceResponse;
     
     @Column(name = "cached_due_error_code")
-    public final String cached_due_error_code;
+    public final String cachedDueErrorCode;
     
     @Column(name = "cached_due_error_description")
-    public final String cached_due_error_description;
+    public final String cachedDueErrorDescription;
     
     @Column(name = "cached_due_id")
-    public final Integer cached_due_id;
+    public final Integer cachedDueId;
 }

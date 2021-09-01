@@ -26,11 +26,13 @@ public class EResponse implements Serializable{
 	@JsonFormat()
 	@NonNull
 	private ResStatus status;
+	@JsonFormat(pattern = "yyyyMMdd")
 	private final LocalDate validTo;
 	private final Integer amount;
 	private final Integer fee;
 	private final Integer total;
 	private final String shortDesc;
+	private final String longDesc;
 	private final String secondId;
 	
 	@Setter
@@ -65,6 +67,6 @@ public class EResponse implements Serializable{
 		@JsonValue
 		public String getCode() {
 			return statuss;
-		}	
+		}
 	}
 }
