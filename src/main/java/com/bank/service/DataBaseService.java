@@ -1,6 +1,7 @@
 package com.bank.service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.stereotype.Service;
 
@@ -18,4 +19,6 @@ public interface DataBaseService {
     public Iterable<Category> getAll();
     
     public SubscrResponse saveSubscription(Subscription subscResponse);
+
+	public CompletableFuture<List<Subscription>> sortSubscrByDate() throws InterruptedException;
 }

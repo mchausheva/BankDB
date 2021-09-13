@@ -13,7 +13,6 @@ public class DivideMerchantCategory {
 	private List<Merchant> merchantsList;
 
 	public List<Category> asList() {
-
 		LinkedHashMap<Integer, Category> hashMap = new LinkedHashMap<Integer, Category>();
 		int categoryOrder = 0;
 		for (Merchant merchant : merchantsList) {

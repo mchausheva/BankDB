@@ -5,8 +5,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -23,6 +28,8 @@ public class Subscription implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sub_seq")
+    @SequenceGenerator(name = "sub_seq", sequenceName = "sub_seq", allocationSize = 0)
     @Column(name = "subscription_id")
     public final Integer subscriptionId;
     
@@ -68,27 +75,30 @@ public class Subscription implements Serializable{
     @Column(name = "automatic_max_days_retry")
     public final Integer retryDays;
     
+    @JsonFormat(pattern = "yyyyMMdd")
     @Column(name = "insert_date")
     public final Date insertDate;
     
+    @JsonFormat(pattern = "yyyyMMdd")
     @Column(name = "last_update_date")
-    public final Date lastUpdateDate;
+    public Date lastUpdateDate;
     
     @Column(name = "cached_due_amount")
-    public final Integer cachedDueAmount;
+    public Integer cachedDueAmount;
     
+    @JsonFormat(pattern = "yyyyMMdd")
     @Column(name = "cached_due_checked_date")
-    public final Date cachedDueCheckedDate;
+    public Date cachedDueCheckedDate;
     
     @Column(name = "cached_due_service_response")
-    public final String cachedDueServiceResponse;
+    public String cachedDueServiceResponse;
     
     @Column(name = "cached_due_error_code")
-    public final String cachedDueErrorCode;
+    public String cachedDueErrorCode;
     
     @Column(name = "cached_due_error_description")
-    public final String cachedDueErrorDescription;
+    public String cachedDueErrorDescription;
     
     @Column(name = "cached_due_id")
-    public final Integer cachedDueId;
+    public Integer cachedDueId;
 }

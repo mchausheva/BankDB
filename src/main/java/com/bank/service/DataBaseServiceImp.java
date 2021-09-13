@@ -1,8 +1,13 @@
 package com.bank.service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.bank.model.Category;
@@ -27,7 +32,7 @@ public class DataBaseServiceImp implements DataBaseService {
 	
 	@Autowired
 	private SubscriptionRepository subscrRepository;
-
+	
 	@Override
 	public void insertAll(List<Category> categoryList) {
 		log.info("Inserting. ");
@@ -55,7 +60,9 @@ public class DataBaseServiceImp implements DataBaseService {
 		
 		subscrRepository.save(subscription);
 		boolean existId = subscrRepository.existsById(subscription.getSubscriptionId());
-		if (existId) {
+		
+		
+		if (!existId) {
 			response = new SubscrResponse("200", "SUCCESS", "Успешно", null, null, "Success", 1);
 			response.setStatus(ResponseStatus.OK);
 		} else {
@@ -63,5 +70,19 @@ public class DataBaseServiceImp implements DataBaseService {
 		}
 		
 		return response;
+	}
+
+	@Override
+	public CompletableFuture<List<Subscription>> sortSubscrByDate() throws InterruptedException{		
+		log.info("Sort Subscription by Date. ");
+		
+		Pageable pageable = PageRequest.of(1, 20, Sort.by("cachedDueCheckedDate").ascending());
+		Page<Subscription> page = subscrRepository.findAll(pageable);
+		
+		List<Subscription> listSubscr = page.getContent();
+
+	    return CompletableFuture.completedFuture(listSubscr);
+		
+	    //return listSubscr;
 	}
 }
